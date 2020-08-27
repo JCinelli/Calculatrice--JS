@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css.css">
+    <title>Calculatrice</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="calculette">
+            <div class="ecran">
+                <input id="ecran" type="text" disabled value="">
+            </div>
+            <div class="contcorp">
+                <div class="chiffre">
+                    <div class="ligne">
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb7">7</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb8">8</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb9">9</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb4">4</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb5">5</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb6">6</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb1">1</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb2">2</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="nb3">3</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case mdcase">
+                            <p onclick="writeNb(this.innerHTML)" id="nb0">0</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="virgule">.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="operator">
+                    <div class="ligne">
+                        <div class="case bigcase">
+                            <p onclick="suppr()" id="supp">Suppr</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="plus">+</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="moins">-</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="multiplie">*</p>
+                        </div>
+                        <div class="case">
+                            <p onclick="writeNb(this.innerHTML)" id="divise">/</p>
+                        </div>
+                    </div>
+                    <div class="ligne">
+                        <div class="case bigcase">
+                            <p onclick="calculThis()" id="egal">=</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let calcul = "";
+        let resultat = "";
+
+        function writeNb(number) {
+
+            if (document.getElementById("ecran").value === resultat) {
+                switch (number) {
+                    case "*":
+                    case "/":
+                    case "-":
+                    case "+":
+
+                        calcul = resultat;
+                        break;
+                }
+            }
+
+            if (calcul === "") {
+                switch (number) {
+                    case "*":
+                    case "/":
+                    case "-":
+                    case "+":
+                        calcul = "0";
+                        let monEcran = document.getElementById("ecran").value = calcul;
+                        break;
+                }
+            }
+
+            switch (calcul.charAt(calcul.length - 1)) {
+                case "*":
+                case "/":
+                case "-":
+                case "+":
+
+                    switch (number) {
+                        case "*":
+                        case "/":
+                        case "-":
+                        case "+":
+                            calcul = calcul.substring(0, calcul.length - 1);
+                            break;
+                    }
+                    break;
+            }
+
+            calcul += number;
+            let monEcran = document.getElementById("ecran").value = calcul;
+
+            if (calcul != "") {
+                let monEcran = document.getElementById("ecran").classList.add("focusInput");
+            } else {
+                let monEcran = document.getElementById("ecran").classList.remove("focusInput");
+            }
+
+        }
+
+        function calculThis() {
+            if (calcul === "") {
+                let monEcran = document.getElementById("ecran").value = "Hum hum ..";
+            } else {
+                calcul = eval(calcul);
+                let monEcran = document.getElementById("ecran").value = calcul;
+                resultat = calcul.valueOf().toString();
+                calcul = "";
+            }
+
+        }
+
+        function suppr() {
+            calcul = "";
+            resultat = "";
+            let monEcran = document.getElementById("ecran").value = calcul;
+            monEcran = document.getElementById("ecran").classList.remove("focusInput");
+        }
+
+    </script>
+</body>
+
+</html>
